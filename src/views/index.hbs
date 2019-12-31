@@ -2,32 +2,39 @@
 <!DOCTYPE html>
 <html>
 
-{{!-- <head>
+<head>
  
         
-        <link rel = "stylesheet" href = "./css/styles.css">
+        <link rel = "stylesheet" href = "/css/style.css">
         <!--change the site name-->
-        <title>title</title>
+        {{!-- <title>title</title>
         <!--set the icon-->
-        <link rel = 'icon' href = './img/wetaher.png'>
-</head> --}}
+        <link rel = 'icon' href = './img/wetaher.png'> --}}
+</head>
 
 <body>
-    {{!-- <div class='main-content'>
-        {{>header}}
-        <p>some injections through hbs: {{title}}, {{name}}</p>
-        <form>
-            <input placeholder="location">
-            <button>Search</button>
-        </form>
-        <p id='message-1'></p>
-        <p id='message-2'></p>
+    {{>header}}
+
+    <div class='main-content' >
+        
+        <img class = 'profile_portrait' src = '/img/profile.jpeg'>
+        <div class = 'text'>
+            <li>Name: {{name}}</li>
+            <li>Address: San Francisco, CA94132</li>
+            <li>Email: <a href="mailto:shhuang9532@gmail.com"> shhuang9532@gmail.com</a></li>
+            <li>Phone: (1)415-802-5566</li>
+            <li>Education: B.S in Computer Science at UC San Diego</li>
+        </div>
+            
+        <div class = 'information'>
+
+        </div>
+
     </div>
+
     {{>footer}}
     
-    <!-- make sure the script run after all elem is avail-->
+    {{!-- <!-- make sure the script run after all elem is avail-->
     <script src = "js/app.js"></script> --}}
-
-    {{name}}
 </body>
 </html>
