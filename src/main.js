@@ -49,7 +49,7 @@ main.get('/works', (req, res) => {
     })
 })
 
-
-main.listen(3000, () => {
-    console.log('server is up on port 3000')
+const port = process.env.PORT || 1337
+main.listen(port, () => {
+    console.log('server is up on port: ', port)
 })
