@@ -1,13 +1,22 @@
 
+const dotenv = require('dotenv');
+dotenv.config();
+
+const{
+DB_USER: user,
+DB_HOST: host,
+DB_PORT: port,
+DB_DATABASE: database,
+DB_PASSWORD: password,
+} = process.env
 
 const {Pool,Client} = require('pg')
-const url = 'postgres://nmmuphsgoxjulp:6c7a0193eb85bca5ea08e913d645d6c10b991943e58308b1617666c9e28a7494@ec2-52-23-14-156.compute-1.amazonaws.com:5432/dco2u4di1ebi9b'
 const config = {
-      user: 'nmmuphsgoxjulp',
-      host: 'ec2-52-23-14-156.compute-1.amazonaws.com',
-      database: 'dco2u4di1ebi9b',
-      password: '6c7a0193eb85bca5ea08e913d645d6c10b991943e58308b1617666c9e28a7494',
-      port: 5432,
+      user,
+      host,
+      database,
+      password,
+      port,
       ssl: true
 }
 
