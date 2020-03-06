@@ -8,7 +8,7 @@ function start() {
 // When the user clicks on <span> (x), close the modal
 function dismiss(){
     const modal = document.getElementById("myModal");
-  modal.style.display = "none";
+  modal.style.display = "none"
 }
 
 function dismissReader () {
@@ -63,18 +63,34 @@ function savePost() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({post_name, post_body})
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-        const modal = document.getElementById("myModal");
-        modal.style.display = "none";
-    
-        addRow(data)
-      })
+      }).then((response)=>{ 
+          response.json().then((data)=>{
+            console.log('Success:', data.data[0], typeof(data.data[0]));
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        
+            addRow(data.data[0])
+        })
+    })    
       .catch((error) => {
         console.error('Error:', error);
-      })
+        })
+
+    //   response.json().then((data)=>{
+    //     console.log(data.posts)
+    // data.posts.forEach(element => {
+    //     addRow(element)
+    // });
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log('Success:', data);
+    //     const modal = document.getElementById("myModal");
+    //     modal.style.display = "none";
+    
+    //     addRow(data.data)
+    //   })
+
  
     
 
