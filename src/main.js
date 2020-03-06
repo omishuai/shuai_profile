@@ -9,8 +9,7 @@ var bodyParser = require('body-parser')
 
 
 //database
-require('./utils/mongodb')
-
+//const connection = require('./utils/mongodb').run()
 //register views
 const hbs = require('hbs')
 const partial_dir = __dirname + '/partials'
@@ -39,7 +38,7 @@ main.get('/', (req,res) => {
 })
 main.get('/leetcode', (req, res) => {
     res.render('leetcode', {
-        data: []
+        data: [],
     })
 })
 

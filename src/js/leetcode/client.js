@@ -39,8 +39,8 @@ function createTable() {
 
         fetch('/getPosts').then((response)=>{
             response.json().then((data)=>{
-                console.log(data.users)
-            data.users.forEach(element => {
+                console.log(data.posts)
+            data.posts.forEach(element => {
                 addRow(element)
             });
             })
@@ -53,16 +53,16 @@ function createTable() {
 
 function savePost() {
     var post_name = document.getElementsByClassName("modal-title")[0].value 
-    var body = document.getElementsByClassName("modal-body")[0].value 
+    var post_body = document.getElementsByClassName("modal-body")[0].value 
     console.log('saving....', post_name)
   
-    console.log({post_name, body})
+    console.log({post_name, post_body})
     fetch('/storePost', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({post_name, body})
+        body: JSON.stringify({post_name, post_body})
       })
       .then((response) => response.json())
       .then((data) => {
@@ -90,7 +90,7 @@ function openText(title, body) {
 }
 
 // ADD A NEW ROW TO THE TABLE.s
-function addRow({number, post_name: title, body, date}) {
+function addRow({post_id: number, post_name: title, post_body: body, post_time: date}) {
     var table = document.getElementById('postTable');
     var row = table.insertRow(1);
     var cell1 = row.insertCell(0);
@@ -99,7 +99,6 @@ function addRow({number, post_name: title, body, date}) {
     var cell4 = row.insertCell(3)
 
     row.style.padding = "15px";
-
     cell1.innerHTML = number
     cell2.innerHTML = `<div id="postText" onClick="openText('${title}', '${body}')">${title}</div>`
     cell3.innerHTML = `${date}`
