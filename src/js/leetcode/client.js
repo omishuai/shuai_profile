@@ -52,8 +52,10 @@ function createTable() {
 }
 
 function savePost() {
-    var post_name = document.getElementsByClassName("modal-title")[0].value 
+    var post_name = document.getElementsByClassName("modal-title")[0].value
+    document.getElementsByClassName("modal-title")[0].value = null 
     var post_body = document.getElementsByClassName("modal-body")[0].value 
+    document.getElementsByClassName("modal-body")[0].value = null
     console.log('saving....', post_name)
   
     console.log({post_name, post_body})
