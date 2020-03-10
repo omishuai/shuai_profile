@@ -36,17 +36,17 @@ main.get('/', (req,res) => {
         name: 'Shuai Huang'
     })
 })
-main.get('/leetcode', (req, res) => {
-    res.render('leetcode', {
+main.get('/posts', (req, res) => {
+    res.render('posts_updated', {
         data: [],
     })
 })
 
-main.get('/works', (req, res) => {
-    res.render('works', {
-        data: []
-    })
-})
+// main.get('/works', (req, res) => {
+//     res.render('works', {
+//         data: []
+//     })
+// })
 
 const port = process.env.PORT || 1337
 main.listen(port, () => {

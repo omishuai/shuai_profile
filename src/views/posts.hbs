@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+    <script type="text/javascript" src='/js/leetcode/client.js'> </script>
+</head>
+
+<body onload="createTable();">
+
+{{>header}}
+<button id="myBtn" onclick="start()">Add Post</button>
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg" style="width: 100%; height:100%">
+    <div class="modal-content">
+      <div class="modal-header">
+        Title: <input class="modal-title" placeholder="..."></input>
+      </div>
+
+      <textarea class="modal-body" style="height: 500px; width: 90%; max-width: 100%; max-height:100%"> </textarea>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="dismiss()">Close</button>
+        <button type="submit" class="btn btn-default" data-dismiss="modal" onclick= "savePost()">Post</button>
+        <input id = "verification" class="btn btn-default" placeholder="password">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myReadModal" role="dialog">
+    <div class="modal-dialog modal-lg" style="width: 100%; height:100%" >
+      <div class="modal-content">
+        <div class="modal-header">
+          Title: <div class="modal-title" id = 'reader-modal-title'></div>
+        </div>
+        <div class="modal-body" id = 'reader-modal-body'  style="width: 100%; height:100%" > </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default"  data-dismiss="modal" onclick="dismissReader()">Close</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+<br><br>
+<div class = "search">
+  Search Posts:
+  <input  id="post_search" name="posts">
+  <button id="srchBtn" type="submit">Search</button>
+</div>
+
+    
+<div>
+  <!--first thing to run is to create table and populate the entry-->
+  <div id="container"></div>
+</div>
+{{!-- {{>footer}} --}}
+</body>
+
+    
+</html>
