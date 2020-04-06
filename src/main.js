@@ -3,10 +3,8 @@
 
 
 //router to leetcode 
-const leetcodeRouter = require('./router/leetcode')
+const postRouter = require('./router/posts')
 var bodyParser = require('body-parser')
-
-
 
 //database
 //const connection = require('./utils/mongodb').run()
@@ -28,7 +26,7 @@ main.use(express.static(__dirname ));
 
 
 //set up the routers
-main.use(leetcodeRouter)
+main.use(postRouter)
 
 //request to main page
 main.get('/', (req,res) => {
