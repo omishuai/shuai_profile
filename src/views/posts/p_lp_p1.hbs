@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+
+<h2 style= "display: block; border-bottom: 1px grey solid">Push Technology: Long Polling</h1>		
+<p style= "font-family: 'PT Serif';">
+<h3>push technology</h3>
+<ol>
+	<li>server pushes information to client</li>
+	<li>example: email</li>
+	<li>observer pattern similar to sever push. Observer wait for the update from the subject. Client can subscribe multiple channels from provider (the server)</li>
+</ol> 
+
+</p>
+
+<h3>long polling</h3>
+<p style= "font-family: 'PT Serif';">
+With long polling, the client requests information from the server exactly as in normal polling, but with the expectation the server may not respond immediately.
+If the server has no new information for the client when the poll is received, instead of sending an empty response, the server holds the request open and waits for response information to become available.
+Once it does have new information, the server immediately sends an HTTPS response to the client, completing the open HTTPS Request.
+Upon receipt of the server response, the client often immediately issues another server request, and upon the completion, client opens a new connection and sends a new request
+</p>
+
+
+
+<p style= "font-family: 'PT Serif';">
+<h3>some things to note the project:</h3>
+<ul>
+<li>docker and docker compose
+
+	<ol>
+	<li>dockerfile for each sub project
+		<ol>
+			<li>yml to connect different sub projects</li>
+			<li>to communicate between containers, container name is served as the host</li>
+			<li>make sure delete the container and image after changes before u want to run again.</li> 
+			<li>use port mapping to containers</li> 
+		</ol>
+	</li> 
+	<li>still confused about docker networking
+		<ol>
+			<li>looks like there is internal port and external port in docker </li>
+			<li>host might be different depending on how containers interact</li>	
+		</ol>
+
+
+	</li> 
+	</ol> 
+</li>
+
+<li>how to make sure which python to execute?
+	<ol>
+		<li>python and python3  (#!flask/bin/python3, #!flask/bin/python, #!usr/bin/python3)</li> 
+		<li>needs to figure out interpreter to use</li> 
+	</ol>
+</li>
+<li>Thread and Lock in Python
+	<ol>
+		<li>how does it compare to Java</li>
+	</ol>
+</li>
+</ul>
+</p>
+
+<p style= "font-family: 'PT Serif';">Github: <a href='https://github.com/omishuai/push_lp_pj_2020_3'>Long Polling</a></p>
+
+	</div>
+    
+</div>
+
+{{>footer}}
+
+</body>
+</html>
+
+
+
