@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+        <h2 style= "display: block; border-bottom: 1px grey solid"> Internship Program at Morgan Stanley</h1>
+
+    <p>
+        In the summer of 2018, I had  my first internship offer at Morgan Stanley. I was assigned to Listed Sales & Trading Team, and was grouped
+        to build the backend system of transaction tracing tool. We did not start from scratch, as it gathered all the efforts of previous interns, and 
+        now it is our responsibility to complete it.
+    </p>
+
+    <p>
+        When a trader performs a stock transaction in the bank, an order record is created (not yet completed), and then travels through some internal stations in the system
+        for the purpose of checking, verification and so forth. During this process, the transaction record could be stuck at any station. Usually, the trader
+        will then complain to the engineers about why the transaction is not completed. Now, the tracing tool comes to play.
+    </p>
+    
+    <p>
+        The transaction tracing tool (a website) is used to find the lost transaction record in the process. The tool shows a graph that represents the routes that have been traveled by the order,
+        and the final station on the graph is where the order ends. Engineers will only need to consult the group that's in charge of the final point regarding the stuck order. It saved many hours of
+        labor checking. Without the tool, the engineers will have to ask different groups who are in charge of different stations if the record ever gets blocked there, until they find the record.
+        They have to perform asking manually in linear time. o(n) is not crazy here, but "manually" is.
+    </p>
+    
+    <h3>What did I do?</h3>
+    <p>
+        I was given a codebase. The src is in Python, and the project is framed using DJango. My work, rather than building from scratch, mainly focuses
+        on debugging and troubleshooting (to reproduce the problem, and the fix it).I am responsible to gather all the traveled station points and store them in a tree structure, which is then used
+        in front end.<br><br>What is challenging about this project is to find all the stations. I used a script in perl to acquire the log that writes the next station the transaction record has travelled to:
+        <br><br>
+        <strong>-> grab log (FIX Messages) from current station ==> [a,b,c,d....] (all "from-to" strings for all records that have through this station) </strong> 
+        <br>
+        <strong>-> locate the "from-to" using id, and parse "from-to", and use the "to" to search for next station; request to connect to potential next stops through admin to verify which stop it should go  </strong>
+        <br>
+        <strong>-> REPEAT to grab log ....</strong>
+        <br>
+        <br>
+        Lots of time is spent on asking permissions for the connection. The project was not working because it does not have access to different stations, and one of my jobs is to make the connections through.
+        the main part of the project involves two things:
+        <ol>
+            <li>get connected</li>
+            <li>get FIX Messages (log)</li>
+        </ol>
+        and the process was stated above.
+
+        <br>
+        <br>
+        there is a caching built in, which is a way that I proposed: caching the mapping from connection string to next station. For one record, once its type is determined from trader's end, the path it will 
+        take is also determined. Thus, we only need to check some downstream that we think it should go through. Thus, instead of checking potential endpoint from parsing "from-to" connection strings, we only need to
+        store the mapping from connection string to desired next stop, once it is checked exist, and re-used next time.
+    </p>
+
+    <h3> What have I learnt?</h3>
+    <p>
+        I would say, I learned to work with a large codebase. I learned how to work with my boss and colleague. I wish I could build from scratch so that I could gain more experience with coding backend system in
+        Python and DJango, but I certainly believe, how to work with people and how to solve the problem are more important than what technologies that I have grasped. After all, I can still learn Python and DJango 
+        through sites and personal project, but working with people, that's one of the essential part of interning in industry. 
+    </p>
+    
+    </div>
+
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>
