@@ -25,6 +25,16 @@ router.get('/posts/p3', (req, res) => {
     })
 })
 
+router.get('/posts/p4', (req, res) => {
+    res.render('posts/p4', {
+    })
+})
+
+router.get('/posts/p5', (req, res) => {
+    res.render('posts/p5', {
+    })
+})
+
 // //get all posts
 // router.get('/getPosts', async (req, res) => {
 

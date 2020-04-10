@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+
+		<h2 style= "display: block; border-bottom: 1px grey solid">Spring- Spring Basics</h2>		
+
+		<p style= "font-family: 'PT Serif';"></p>
+	<ul>
+	
+	<li>dependency injection</li> 
+    
+	<li>bean scope
+        <ul>
+			<li>by default, bean scope is singleton</li>
+			<li>to change the scope, add attribute scope = "prototype"</li>
+		</ul>
+	</li> 
+    
+	<li>init and destroy method
+        <ul>
+			<li>init-method="onCreate"</li> 
+			<li>destroy-method="onDestroy"</li>
+			<li>can specify default init and destroy methods in <strong>beans</strong> tag but it will be overridden by the init/destroy method in <strong>bean</strong> tag </li> 
+		</ul>
+	</li>
+    
+	<li>factory method 
+        <ul>
+			<li>static method used in the bean itself</li>
+        	<li>non static method used with a factory bean</li>
+		</ul> 
+	</li>
+    
+	<li>pass in constructor a list:
+<xmp>		
+<constructor-arg name = "">
+	<list>
+		<value> a </value>
+		<value> n </value>
+	</list>
+</constructor-arg>
+</xmp>
+</li> 
+
+    <li>manage a list of objects
+<xmp>
+<list>
+	<ref bean=""/>
+</list>
+</xmp>
+</li>
+
+	<li> manage a map in property
+<xmp>
+<property  name="">
+	<props>
+        <prop key ="keyval"> "value"</prop>
+	</props>
+</property>
+</xmp>
+		
+     	more general:
+<xmp>
+<property  name="">
+	<map>
+        <entry key ="keyval" value:ref ="refbean"></entry>
+    </map>
+</property>
+</xmp>
+</li>
+
+<li> autowire: invokes the setter method, or initialize instance references
+        <ul>
+		<li><strong>byType</strong> (wont work well with interfaces/super class; have to be specific about type)</li>
+        <li><strong>byName</strong> (instance var name matches id of the bean)</li>
+        <li><strong>constructor</strong>
+<pre>
+class Class {
+    SubClassOne one;
+	SubClassTwo two;
+    Class (SubClassOne one, SubClassTwo two) {}
+}
+</pre>
+you can use "constructor" to initialize the fields but the type has to be specific	
+		</li>
+            
+		</ul>
+		<p>
+			byType and byName are property autowire
+			you cannot property and constructor autowire at the same time
+
+			to make the <code>autowire</code> global, do default-autowire= " " in <strong>beans</strong> tag; When autowire "byType",
+			to avoid ambiguity when two beans are created out of one type, specify default beans in <code>default-autowire-candidate</code>,
+			so that when there is ambiguity, only beans that are not in the list will be filtered out.
+			; another way to achieve this is to set specific beans <code>autowire-candidate = "false"</code>, or <code>primary ="true"</code>
+		</p>
+</li>
+</ul>
+
+<br>
+<br>
+===================================================================================
+<br>
+<br>
+<h3 style= "display: block; border-bottom: 1px grey solid">Annotation (on Java)</h3>	
+
+<p>
+	<ul>
+		<li>***wiring with annotation for "byType"
+			<ul>
+				<li> <code>@Autowired</code> before instance reference or setter method
+<pre>
+
+this can be used to mix property and constructor, and it does not even need
+to have the setter method
+(required=false) to make the bean optional for setting insatnce var
+</pre>
+				</li>
+				<li>qualifier to the bean
+<xmp>
+when there are multiple classes that implement one interface, but only one bean/class that is desired,
+then you can add qualifier to the bean/class:
+
+<qualifier value ="q"></qualifier>
+
+@Qualify ("q")
+class A {}
+and then, add @qualifier("q") under @autowired
+</xmp>					
+				</li>
+				<li> <code>@resource</code>  can also help limit to the bean, by having
+					<ul>
+						<li>@resource (byType)</li>
+						<li>@resource (name = "id") (byName)</li>
+					</ul>	
+				</li>
+				<li>
+<pre>
+@inject
+@named(vlaue ="id")
+</pre>
+</li>
+
+			</ul>
+
+		</li>
+		<li> <code>@PreDestroy</code> and <code>@PostConstruct</code>: @PreDestroy wont get called if the bean is prototype </li>
+		<li> automatic beans discovery
+			<ul>
+ 		<li>context:component-scan</li> 
+        <li>add @component to each class that wants to be treated as a bean</li>
+        <li>
+			<pre>
+@Value() to set default value
+- void set(@Value("1") int i) {
+	this.i = i;
+}
+this is the same as setting property value in xml
+			</pre>
+		</li>
+			</ul>
+       </li>
+
+	</ul>
+</p>
+
+	</div>
+    
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>
