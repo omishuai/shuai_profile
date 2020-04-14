@@ -35,6 +35,11 @@ router.get('/posts/p5', (req, res) => {
     })
 })
 
+router.get('/posts/p6-spring-database', (req, res) => {
+    res.render('posts/p6-spring-database', {
+    })
+})
+
 // //get all posts
 // router.get('/getPosts', async (req, res) => {
 

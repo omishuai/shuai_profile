@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+
+<h2 style= "display: block; border-bottom: 1px grey solid">Spring Database -  MySQL</h2>		
+
+<p style= "font-family: 'PT Serif';">
+we used JDBC and DBCP while using MySQL with spring. JDBC offers a connector, specifically using <code>Driver.java</code>  (that takes in user, conn url, password, host/port, etc) to make
+make a connection to database. DBCP offers the connection pool where the connection once created can be reused, so it helps improve the performance.
+Here, <code>BasicDataSource in DBCP</code> requires db info and <code>Driver.java</code>. Spring-JDBC is used to make different types of JdbcTemplate so that does the action queries.
+<br>
+<br>
+<ol>
+    <li>JdbcTemplate: if you want to pass in parameter, then do "?"</li>
+    <li>NamedParameterJdbcTemplate (where value is passed in as a Map):
+        <br>
+        namedParameters:
+        <ul>
+<li>BeanPropertySQLParameterSource: the bean properties need to have getter and setter method</li>
+<li>MapSqlParameterSource</li>
+        </ul>
+    </li>
+</ol>
+</p>
+
+<h3 style= "display: block; border-bottom: 1px grey solid">PreparedStatements (batch update for example)</h3>
+<p style= "font-family: 'PT Serif';">
+Both jdbcTemplate and NamedParameterJdbcTemplate can do PreparedStatements. check docs to see how they are done.
+<br>The following is in NamedParameterJdbcTemplate:
+    <p>
+    To do batchUpdate, we can basically update for each object in the list. We could loop through the object list, and create each bean for the object, and then update, but better way is to create batch parameters:
+<pre>
+SqlParameterSource[] params = SqlParameterSourceUtils.createBatch(objects.toArray());
+// here the params is a list of param for each object which we will update
+// both MapSqlParameterSource and BeanPropertySqlParameterSource implement SqlParameterSource
+then we do batch update:
+namedJdbc.batchUpdate("sql string here", params);
+</pre>
+    </p>
+</p>
+
+<h3 style= "display: block; border-bottom: 1px grey solid">Transaction</h3>
+<p>
+used in batch change queries: if one update fails, the the whole update query will fail; the previously succeeded
+tx namespace enables support for transaction management in Spring framework
+add tx namespace when using transaction
+<xmp>
+	<bean id="jdbcTransactionManager"
+		  class = "org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+</xmp>
+transaction uses the transaction manager in spring jdbc which takes in the datasource created through connection initialziation
+adding tag @Transactional to make the method with transaction
+</p>
+
+</div>
+    
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>
