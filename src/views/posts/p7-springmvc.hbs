@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+
+<h2 style= "display: block; border-bottom: 1px grey solid">Spring- Spring MVC</h2>		
+
+<p style= "font-family: 'PT Serif';">
+
+
+    <h3 style= "display: block; border-bottom: 1px grey solid">Request, Servlet and Controller Flow</h3>
+    <p>
+        We have a running context (where tomcat server is running) <code>/</code>, and DispatcherServlet handles request from /app/*.
+        Then, when a request is made <code>/app/test</code>, server first checks the web.xml to look for the best matched servlet, and here it finds DispatcherServlet.
+        Then, the server checks the controller, and find the requestMapping of <code>/test</code>. Controller handles the request and then gives out the path, say
+        <code>/WEB-INF/jsps/test.jsp</code>. Then server goes to webxml, and look for servlet that handles that path <code>/WEB-INF/jsps/test.jsp</code>. Unluckily,
+        it does not find any matches, coz the only servlet defined in web.xml deals with <code>/app/*</code>. Thus, default servelt that belongs to the servlet container
+        will be triggered, and in the end, <code>/WEB-INF/jsps/test.jsp</code> is processed.    
+    </p>
+    <p>
+        By setting DispatcherServlet to handle <code>/app/*</code>, it makes every request to go through the spring. If, instead,we have <code>/</code>,then an
+        request like <code>/test</code> will firstly match to DispatcherServlet, and find its request mapping as well in controller, but the problem is that,
+        when server is trying to find the servlet that matches <code>/WEB-INF/jsps/test.jsp</code> returned by controller, DispatcherServlet will also be a match.
+        DispatcherServlet does not handle .jsps, and thus it will be errored. To fix the this problem, we then need to have a jspServlet (with url path /WEB-INF/jsps/*) defined in web.xml, 
+        so that server will find jspServlet the best match to this returned string from controller. However, then the problem here becomes /WEB-INF/jsps/ is exposed.
+        And, if we put /WEB-INF/jsps/test.jsp in browser, then jspServlet will be directly matched, and then request does not go to spring.
+    </p>
+
+</p>
+
+	</div>
+    
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>
