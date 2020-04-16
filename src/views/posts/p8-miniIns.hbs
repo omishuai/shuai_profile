@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+
+<h2 style= "display: block; border-bottom: 1px grey solid">MiniIns: Registration Feature</h2>		
+
+<p style= "font-family: 'PT Serif';">
+	I implemented Registration page today using Thymleaf, JPA and MySQL. JPA nad MySQL is quite amazing to honest, as it saves a lots of time
+	writing queries to access MySQL, compared to using JDBC. Controller is however very confusing to me. Sometimes, it is using Model, sometimes using ModelAndView. Sometimes, some attributes need to be set 
+	in order to present. Thymleaf is new to me, and it is used in html (grabbing data from backend). 
+	<br>
+	<br>
+	One thing to note when a form is used (request through registration), say the form is about a user <code>User</code>, and the user inputs data to the form.
+	so we get this get request:
+<pre>
+@GetMapping (path = "/register")
+public ModelAndView register(ModelAndView modelAndView, User user) {}
+</pre>
+	It is important to include that user object, and have the default constructor visible.
+</p>
+
+<h3>I have got so far</h3>
+<p style= "font-family: 'PT Serif';">
+	<ul>
+		<li>Data Entity
+			<ul>
+				<li>User</li>
+			</ul>
+		</li>
+		<li>Data Access
+			<ul>
+				<li>UserService</li>
+				<li>UserRepository</li>
+			</ul>
+		</li>
+		<li>Controllers
+			<ul>
+				<li>RegisterController</li>
+			</ul>
+		</li>
+	</ul>
+</p>
+	</div>
+    
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>

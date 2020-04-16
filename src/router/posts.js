@@ -45,6 +45,10 @@ router.get('/posts/p7-springmvc', (req, res) => {
     })
 })
 
+router.get('/posts/p8-miniIns', (req, res) => {
+    res.render('posts/p8-miniIns', {
+    })
+})
 // //get all posts
 // router.get('/getPosts', async (req, res) => {
 
