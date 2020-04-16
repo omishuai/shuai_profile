@@ -31,9 +31,31 @@
         request like <code>/test</code> will firstly match to DispatcherServlet, and find its request mapping as well in controller, but the problem is that,
         when server is trying to find the servlet that matches <code>/WEB-INF/jsps/test.jsp</code> returned by controller, DispatcherServlet will also be a match.
         DispatcherServlet does not handle .jsps, and thus it will be errored. To fix the this problem, we then need to have a jspServlet (with url path /WEB-INF/jsps/*) defined in web.xml, 
-        so that server will find jspServlet the best match to this returned string from controller. However, then the problem here becomes /WEB-INF/jsps/ is exposed.
-        And, if we put /WEB-INF/jsps/test.jsp in browser, then jspServlet will be directly matched, and then request does not go to spring.
+        so that server will find jspServlet the best match to this returned string from controller,but then request does not go to spring.
     </p>
+
+    <h3 style= "display: block; border-bottom: 1px grey solid">Structure</h3>
+<xmp>
+webapp/
+    web.xml 
+        - context and context listener
+        - servlets (DispatcherServlet)
+        - resource (DataSource for db connection)
+    servlet.xml configs
+        - spring config, and it translates what you return from controller method to a view for this servlet
+    META-INF/
+        - context.xml for tomcat context config (db)
+    WEB-INF/jsps:
+        -.jsps files to render
+    
+main/
+    java/
+        - controller
+        - service <= db connector
+    resources/
+        - context-bean(s).xml (signified by listener upon start)
+</xmp> 
+
 
 </p>
 
