@@ -49,6 +49,11 @@ router.get('/posts/p8-miniIns', (req, res) => {
     res.render('posts/p8-miniIns', {
     })
 })
+
+router.get('/posts/p9-testing', (req, res) => {
+    res.render('posts/p9-testing', {
+    })
+})
 // //get all posts
 // router.get('/getPosts', async (req, res) => {
 

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+
+<h2 style= "display: block; border-bottom: 1px grey solid">MiniIns - Registration Testing (Unit, Acceptance Testing)</h2>		
+
+<p style= "font-family: 'PT Serif';">
+    
+    <h3 style= "display: block; border-bottom: 1px grey solid">Unit Test</h3>
+    <p> 
+        - testing Controller (register)
+        Controller does not handle exception or error, and does not have code for it. So it is not necessary
+        to tets for different exceptions thrown. When comparing object, if didn't implement equals for the object,
+        better we compare it by fields. Since controller uses Service in the background (context-related), it is better to use Mockito. Mockito
+        can mimic the behaviors of a service:
+<pre>
+    MyController controller = new MyController();
+    User u = new User()
+    
+    // Mock the behavior of UserService
+    UserService userService = mock(UserService.class);
+    controller.setUserService(userService);
+
+    // define the behavior of this service (define each method in service)
+    when(userService.findByEmail("hs13706717787")).thenReturn(null);
+    when(userService.addUser(u)).thenReturn(u);
+</pre>
+<br>
+<br>
+<href src = "https://github.com/omishuai/miniIns/blob/master/src/test/java/com/app/miniIns/registerTest.java"> example link</href>
+    </p>
+
+</p>
+
+<p style= "font-family: 'PT Serif';">
+    <h3 style= "display: block; border-bottom: 1px grey solid">Acceptance Test</h3>
+    <h5>Cucumber.io -- <a href= "https://github.com/omishuai/miniIns/tree/register-test/src/test/java/com/app/miniIns/cucumber/bdd">my example code</a> </h5>
+    
+    <p>
+        Acceptance Test is for testing the user interaction, and it tests the software against whether the software matches the business requirement (use cases). 
+        And it is a level up from unit test. Since it is testing for client-side interaction, the tests are modeled from use cases and scenarios, and the logic of excution
+        is as if an user is interacting with the software. Example:
+        <br>we start with <code>*.features</code>
+ <pre>
+Feature: Create User
+
+    Scenario: Users Register Correctly
+    Given empty database
+    When User registers with username "username",password "password", email "email@server.com", age 21 and gender "male"
+    Then Response has status code 201
+    And Response has value "username" for "/username"
+    And Response has value "email@server.com" for "/email"
+    And Response has value 21 for "/age"
+    And Response has value "male" for "/gender"
+ </pre>       
+ The above feature has one scenario and it creates an user. The cucumber Runner will run through this <code>*.feature</code>, and execute each scenario.
+ For each scenario, steps are executed in sequence. In our example, it first locates <code>Given empty database</code>. Now, here the description of the step is
+ is actually the definition, which maps to a single method in <code>stepDefinitions.java</code>:
+ <pre>
+     @Given("Given empty database")
+     public void emptyDatabase() {
+         // to make sure the db is empty, we can test it using Assert()
+     }
+ </pre>
+    the same thing applies to rest of the steps. Another example, <code>And Response has value "username" for "/username"</code>, this step will lead to a method that 
+    has two parameters, and the values are "username", and "/username";
+    </p>
+
+    <p>
+        After we translate scenarios and steps into code, we then need to mimic the process and check against what a user will see. In order to make it work, we need to simulate the running context.
+        Here is the structure of the files (all in <code>test/</code>):
+        <ul>
+            <li>java/cucumber
+                <ul>
+                    <li>steps/
+                        <li>${software}_stepdefs.java  This is where all the step code is</li>
+                    </li>
+
+                    <li>CucumberTest.java  Runner that starts the run</li>
+                    <li>Configurator.java  Config that pulls all context from <code>src/main/java/MiniInsApplication</code> to run Cucumber </li>
+                </ul>
+            </li>
+            <li>resources/
+                <ul>
+                    <li>features/  this is where all <code>*.feature</code> reside, and will be scanned when the test is run</li>
+                    <li>application.properties    this is where in-memory db h2 is configured, since we don't want to mess up our remote mysql</li>
+                </ul>
+            </li>
+
+        </ul> 
+
+        since we need to mimic the process when user fires an action, we need to send request. We use <code>RestTemplate</code> to send request. It will respond
+        with http body, if controller defines the handler to return an object, and status code, if defined in handler. There are ways to form the request:
+        <ul>
+            <li> *RestTemplate.postForEntity() which returns an entity, and the returned from controller handler will be in body</li>
+            <li> RestTemplate.postForObject()</li> which returns a defined object directly
+        </ul>
+        When there is an error thrown from handler, we can implement a error handler, which then can be set by RestTemplate, so that we will receive an error status code instead of
+        getting suspended. I also implemented one example for one Register part of the entire application, and the src can be found in <a href= "https://github.com/omishuai/miniIns/tree/register-test/src/test/java/com/app/miniIns/cucumber/bdd">my example code</a>
+
+    </p>
+</p>
+    Integration Test
+</p>
+</div>    
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>

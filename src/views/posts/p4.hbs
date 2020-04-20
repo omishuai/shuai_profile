@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href = "/css/style.css">
+</head>
+
+<body>
+
+{{>header}}
+
+<div class = "row">
+	<div style = "margin: 5%">
+    <h2 style= "display: block; border-bottom: 1px grey solid">Algorithms And Data Structures</h1>		
+    <p style= "font-family: 'PT Serif';">
+        <h3> Infix</h3>
+        <p>
+            infix: a + (b + c) / d
+            <br>
+            if we want to convert to prefix: + a / + b c d
+            <br>
+            we scan from the left:
+            <ul> 
+                <li>if we read number, we push to the stack</li>
+                <li>if we read operator, then we need to discuss the difference between */ and +-, because the order is different
+                    <ul>
+                        <li>if +-, then popping from stack and form string until "(" or empty stack, and then push sign and then the newly formed string</li>
+                        <li>if */, then we just pop elements from the stack, and form a new str, and insert operator, then this new str</li>
+                    </ul>
+                </li>
+                <li>if we read (, then we just push to the stack</li>
+                <li>if we read ), then we pop things from the stack until (, and form a string and push to the stack</li>
+            </ul>
+<pre>
+static String infixToPrefix(String str) {
+    Stack<String> st = new Stack<>();
+    int start = 0;
+    while(start < str.length()) {
+	    int end = start;
+	    while(end < str.length() && str.charAt(end) >= '0' && '9' >= str.charAt(end)) {
+	        end++;
+	    }
+
+	    String s = str.substring(start, end == start ? start + 1: end);
+	    System.out.printf("(%s,%s) %s\n", start, end == start ? start + 1: end, s);
+	    start = end == start? end  + 1 : end;
+	    if (s.equals("+") || s.equals("-")) {
+	        String tmp = "";
+	        while (!st.isEmpty() && !st.peek().equals("(")) {
+	            tmp = st.pop() + tmp;
+	        }
+	        st.push(s);
+	        System.out.println(s);
+	        st.push(tmp);
+	        System.out.println(tmp);
+	    } else if (s.equals("*") || s.equals("/")) {
+	        String tmp = st.pop();
+	        st.push(s);
+	        System.out.println(s);
+	        st.push(tmp);
+	        System.out.println(tmp);
+	    } else if (s.equals(")")){
+	        String tmp = "";
+	        String cur = "";
+	        do{
+	            cur = st.pop();
+	            tmp = cur + tmp;
+	        } while (!cur.equals("("));
+	        st.push(tmp.substring(1));
+	    } else {
+	        st.push(s); // ( or number
+	    }
+	}
+	String res = "";
+	while (!st.isEmpty()) {
+	    res = st.pop() + res;
+	}
+	return res;
+}
+</pre>
+    </p>
+        <p style= "font-family: 'PT Serif';">
+        <h3> PreFix</h3>
+        </p>
+
+        <p style= "font-family: 'PT Serif';">
+        <h3> PostFix</h3>
+        </p>
+    </p>
+    </div>
+</div>
+
+{{!-- {{>footer}} --}}
+
+</body>
+</html>
